@@ -40,12 +40,20 @@ def circle():
     arduino_conn.write(msg)
 
 
-def step():
-    t = 0
-    for x in range(-250, 250, 25):
-        z = -120 + 120*sin(t)
-        t += pi/20
-        target_frame = kdl.Frame(kdl.Vector(x, 300, z))
+def step(length=500, height=120, y=300, z=-120, cicle=4, phase=0, direction=1):
+    t = phase
+    sleep_time = 0.02
+
+    speed_down = int((cicle*0.75)/sleep_time)
+    speed_up = int((cicle*0.25)/sleep_time)
+    while True:
+        delta_z = height*sin(t)
+        x = (length/2) * cos(t)
+        x = 0 if (x < 0.01 and x > -0.01) else x
+        delta_t = pi/speed_down if delta_z < 0 else pi/speed_up
+        delta_z = 0 if delta_z < 0 else delta_z
+        t += delta_t*direction
+        target_frame = kdl.Frame(kdl.Vector(x, y, delta_z + z))
         current_angles = kdl.JntArray(leg.getNrOfJoints())
         result_angles = kdl.JntArray(leg.getNrOfJoints())
 
@@ -54,27 +62,12 @@ def step():
         result_angles[0] = np.rad2deg(result_angles[0])
         result_angles[1] = np.rad2deg(result_angles[1])
         result_angles[2] = np.rad2deg(result_angles[2])
-        sleep(0.05)
+        sleep(sleep_time)
         msg = "(%i,%i,%i)" % (result_angles[0],
                               result_angles[1],
                               result_angles[2])
         arduino_conn.write(msg)
-
-    for x in range(250, -250, -25):
-        target_frame = kdl.Frame(kdl.Vector(x, 300, -120))
-        current_angles = kdl.JntArray(leg.getNrOfJoints())
-        result_angles = kdl.JntArray(leg.getNrOfJoints())
-
-        ik_solver.CartToJnt(current_angles, target_frame, result_angles)
-
-        result_angles[0] = np.rad2deg(result_angles[0])
-        result_angles[1] = np.rad2deg(result_angles[1])
-        result_angles[2] = np.rad2deg(result_angles[2])
-        sleep(0.05)
-        msg = "(%i,%i,%i)" % (result_angles[0],
-                              result_angles[1],
-                              result_angles[2])
-        arduino_conn.write(msg)
+        print msg
 
 
 def line():
@@ -111,4 +104,4 @@ def line():
         arduino_conn.write(msg)
 
 while True:
-    step()
+    step(length=500, height=120, y=300, z=-80, cicle=4, phase=pi/2, direction=1)
