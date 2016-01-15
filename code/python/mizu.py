@@ -48,12 +48,12 @@ def step(length=500, height=120, y=300, z=-120, cicle=4, phase=0, direction=1):
     speed_up = int((cicle*0.25)/sleep_time)
     while True:
         delta_z = height*sin(t)
-        x = (length/2) * cos(t)
-        x = 0 if (x < 0.01 and x > -0.01) else x
+        x = (length/2) * cos(t) * sin(pi/4)
         delta_t = pi/speed_down if delta_z < 0 else pi/speed_up
         delta_z = 0 if delta_z < 0 else delta_z
         t += delta_t*direction
-        target_frame = kdl.Frame(kdl.Vector(x, y, delta_z + z))
+        final_y = y + x * cos(pi/4)
+        target_frame = kdl.Frame(kdl.Vector(x, final_y, delta_z + z))
         current_angles = kdl.JntArray(leg.getNrOfJoints())
         result_angles = kdl.JntArray(leg.getNrOfJoints())
 
