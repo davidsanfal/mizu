@@ -1,0 +1,317 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"println"
+			],
+			[
+				"anal",
+				"analogWrite	Arduino analogWrite"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/mizu.ino",
+			"settings":
+			{
+				"buffer_size": 3750,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "platformio.ini",
+			"settings":
+			{
+				"buffer_size": 513,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "PlatformIO",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"PlatformIO",
+					""
+				],
+				[
+					"PlatformIO",
+					"Clean"
+				],
+				[
+					"PlatformIO",
+					"Upload"
+				]
+			],
+			[
+				"PlatformIO",
+				"Upload"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Packa",
+		"selected_items":
+		[
+			[
+				"Packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 146.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/david/github/mizu/code/platformio/mizu",
+		"/home/david/github/mizu/code/platformio/mizu/src"
+	],
+	"file_history":
+	[
+		"/home/david/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/david/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/david/github/mizu/code/platformio/mizu/platformio.ini",
+		"/home/david/github/miniloki/code/platformio/miniloki_omniboard/src/server.ino",
+		"/home/david/github/config.h",
+		"/home/david/github/miniloki/code/platformio/miniloki_omniboard/src/miniloki/miniloki.h",
+		"/home/david/github/miniloki/code/platformio/miniloki_omniboard/src/miniloki/miniloki.cpp",
+		"/home/david/github/loki/loki/loki/loki.ino",
+		"/loki.ino",
+		"/home/david/github/loki/loki/loki.ino",
+		"/home/david/github/atalaya/code/python/atalaya.py",
+		"/home/david/github/miniloki/code/platformio/miniloki_omniboard/src/config.h",
+		"/home/david/github/miniloki/code/platformio/miniloki_omniboard/src/miniloki/config.h",
+		"/home/david/loki/mini_loki/platformio/src/miniloki/miniloki.cpp",
+		"/home/david/loki/mini_loki/platformio/src/server.ino",
+		"/home/david/loki/mini_loki/platformio/src/GY_85.h",
+		"/home/david/loki/mini_loki/platformio/src/GY_85.cpp",
+		"/home/david/loki/mini_loki/platformio/src/BNO055.h",
+		"/home/david/loki/mini_loki/platformio/lib/Adafruit_10DOF/Adafruit_10DOF.cpp",
+		"/home/david/loki/mini_loki/platformio/lib/Adafruit_10DOF/Adafruit_10DOF.h",
+		"/home/david/loki/mini_loki/platformio/src/config.h",
+		"/home/david/loki/mini_loki/platformio/src/BNO055.cpp",
+		"/home/david/loki/mini_loki/platformio/src/miniloki/BNO055.h",
+		"/home/david/loki/mini_loki/platformio/src/SoftI2CMaster.cpp",
+		"/home/david/loki/mini_loki/platformio/src/miniloki/miniloki.h",
+		"/home/david/loki/mini_loki/platformio/src/miniloki/wifi_node.h",
+		"/home/david/loki/mini_loki/platformio/src/miniloki/wifi_node.cpp"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"500",
+			".begin(",
+			".begin",
+			"l.intY;\n    accel.z = (float)accel.intZ;\n}",
+			"Serial",
+			"msg",
+			"ardu",
+			"moni",
+			"seria"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/mizu.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								349,
+								349
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "platformio.ini",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 513,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 207.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "PlatformIO",
+	"project": "platformio.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 323.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
