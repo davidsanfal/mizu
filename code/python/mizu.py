@@ -3,9 +3,11 @@ import numpy as np
 import serial
 import math
 import time
+from serial.serialutil import SerialException
+import pygame
 
 
-SLEEP_TIME = 0.1
+SLEEP_TIME = 0.02
 
 
 class MizuLeg(object):
@@ -49,48 +51,77 @@ class MizuLeg(object):
         result_angles[1] = np.rad2deg(result_angles[1])
         result_angles[2] = np.rad2deg(result_angles[2])
 
-        return result_angles
+        return result_angles, delta_z
 
 
 class Mizu(object):
 
-    def __init__(self):
-        self.arduino_conn = serial.Serial('/dev/rfcomm6', 19200)
+    def __init__(self, port):
+        self.arduino_conn = serial.Serial(port, 19200)
 
         self.leg_1 = MizuLeg(direction=1, angle=math.pi/4, name=1)
         self.leg_2 = MizuLeg(direction=-1, angle=-math.pi/4, name=2)
         self.leg_3 = MizuLeg(direction=-1, angle=math.pi/4, name=3)
         self.leg_4 = MizuLeg(direction=1, angle=-math.pi/4, name=4)
 
-    def walk(self, length=300, height=100, y=300, z=-150, cicle=2, direction=1):
+    def walk(self, joystick, length=300, height=100, y=300, z=-200, cicle=8, direction=1):
         self.leg_1.time = 0
         self.leg_2.time = 0
         self.leg_3.time = 0
         self.leg_4.time = 0
-        walk_type = 2
+        symmetrical = False
         walking = True
+        weight = -0
         while walking:
-            angles = []
-            if walk_type == 1:
-                angles += self.leg_1.step(length, height, y, z, cicle, 0, direction)
-                angles += self.leg_2.step(length, height, y, z, cicle, (6*math.pi)/4, direction)
-                angles += self.leg_3.step(length, height, y, z, cicle, (4*math.pi)/4, direction)
-                angles += self.leg_4.step(length, height, y, z, cicle, (6*math.pi)/4, direction)
-            if walk_type == 2:
-                angles += self.leg_1.step(length, height, y, z, cicle, (7*math.pi)/4, direction)
-                angles += self.leg_2.step(length, height, y, z, cicle, (6*math.pi)/4, direction)
-                angles += self.leg_3.step(length, height, y, z, cicle, (4*math.pi)/4, direction)
-                angles += self.leg_4.step(length, height, y, z, cicle, (5*math.pi)/4, direction)
-            msg = [chr(190)]
-            aux = []
-            for angle in angles:
-                msg.append(chr(int(angle+90)))
-                aux.append(int(angle+90))
-            msg.append(chr(192))
-            print aux
-            self.arduino_conn.write(bytearray(msg))
-            time.sleep(SLEEP_TIME)
-            walking = True
+            for _ in pygame.event.get():
+                pass
+            if joystick.get_button(0):
+                angles = []
+                gap = (5, 4, 6, 7)
+                if symmetrical:
+                    gap = (0, 6, 4, 6)
+                _angles, _z = self.leg_1.step(length, height, y + weight, z,
+                                              cicle, (gap[0]*math.pi)/4, direction)
+                if _z:
+                    weight = 0
+                angles += _angles
+                _angles, _z = self.leg_2.step(length, height, y - weight, z,
+                                              cicle, (gap[1]*math.pi)/4, direction)
+                if _z:
+                    weight = -0
+                angles += _angles
+                _angles, _z = self.leg_3.step(length, height, y - weight, z,
+                                              cicle, (gap[2]*math.pi)/4, direction)
+                if _z:
+                    weight = -0
+                angles += _angles
+                _angles, _z = self.leg_4.step(length, height, y + weight, z,
+                                              cicle, (gap[3]*math.pi)/4, direction)
+                if _z:
+                    weight = 0
+                angles += _angles
+                msg = [chr(190)]
+                aux = []
+                for angle in angles:
+                    msg.append(chr(int(angle+90)))
+                    aux.append(int(angle+90))
+                msg.append(chr(192))
+                print aux
+                self.arduino_conn.write(bytearray(msg))
+                time.sleep(SLEEP_TIME)
+                walking = True
 
-mizu = Mizu()
-mizu.walk()
+pygame.init()
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+mizu = None
+for i in range(20):
+    try:
+        mizu = Mizu('/dev/rfcomm%s' % i)
+        print "connected in port: /dev/rfcomm%s" % i
+        break
+    except SerialException:
+        pass
+if mizu:
+    mizu.walk(joystick)
