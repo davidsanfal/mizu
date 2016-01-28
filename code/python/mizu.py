@@ -64,39 +64,55 @@ class Mizu(object):
         self.leg_3 = MizuLeg(direction=-1, angle=math.pi/4, name=3)
         self.leg_4 = MizuLeg(direction=1, angle=-math.pi/4, name=4)
 
-    def walk(self, joystick, length=300, height=100, y=300, z=-200, cicle=8, direction=1):
+    def walk(self, joystick, length=200, height=150, y=250, z=-250, cicle=1, direction=1):
         self.leg_1.time = 0
         self.leg_2.time = 0
         self.leg_3.time = 0
         self.leg_4.time = 0
-        symmetrical = False
+        symmetrical = True
         walking = True
         weight = -0
         while walking:
             for _ in pygame.event.get():
                 pass
-            if joystick.get_button(0):
+            x_axis = float(joystick.get_axis(1))
+            y_axis = float(joystick.get_axis(3))
+            if x_axis:
+                if x_axis > 0:
+                    direction = -1
+                else:
+                    direction = 1
+                final_cicle = cicle + 10 * (1 - math.fabs(x_axis))
+                print final_cicle
+                right_direction = direction
+                left_direction = direction
+                right_length = length
+                left_length = length
+                if y_axis > 0:
+                    left_length = length - y_axis * length
+                elif y_axis < 0:
+                    right_length = length + y_axis * length
                 angles = []
                 gap = (5, 4, 6, 7)
                 if symmetrical:
-                    gap = (0, 6, 4, 6)
-                _angles, _z = self.leg_1.step(length, height, y + weight, z,
-                                              cicle, (gap[0]*math.pi)/4, direction)
+                    gap = (7, 0, 5, 4)
+                _angles, _z = self.leg_1.step(right_length, height, y + weight, z,
+                                              final_cicle, (gap[0]*math.pi)/4, right_direction)
                 if _z:
                     weight = 0
                 angles += _angles
-                _angles, _z = self.leg_2.step(length, height, y - weight, z,
-                                              cicle, (gap[1]*math.pi)/4, direction)
+                _angles, _z = self.leg_2.step(left_length, height, y - weight, z,
+                                              final_cicle, (gap[1]*math.pi)/4, left_direction)
                 if _z:
                     weight = -0
                 angles += _angles
-                _angles, _z = self.leg_3.step(length, height, y - weight, z,
-                                              cicle, (gap[2]*math.pi)/4, direction)
+                _angles, _z = self.leg_3.step(left_length, height, y - weight, z,
+                                              final_cicle, (gap[2]*math.pi)/4, left_direction)
                 if _z:
                     weight = -0
                 angles += _angles
-                _angles, _z = self.leg_4.step(length, height, y + weight, z,
-                                              cicle, (gap[3]*math.pi)/4, direction)
+                _angles, _z = self.leg_4.step(right_length, height, y + weight, z,
+                                              final_cicle, (gap[3]*math.pi)/4, right_direction)
                 if _z:
                     weight = 0
                 angles += _angles
