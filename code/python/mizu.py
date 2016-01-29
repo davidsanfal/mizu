@@ -29,14 +29,16 @@ class MizuLeg(object):
         speed_down = int((cicle*0.75)/SLEEP_TIME)
         speed_up = int((cicle*0.25)/SLEEP_TIME)
         delta_z = height*math.sin(self.time + phase)
-        x = (length/2) * math.cos(self.time + phase) * math.sin(self.angle)
+        x = ((length)/2) * math.cos(self.time + phase) * math.sin(self.angle)
         final_y = y + x * math.cos(math.pi/4)
         final_x = x
         if self.name == 1 or self.name == 3:
             final_x = (length/2) * math.cos(self.time + phase) * math.sin(self.angle)
+            final_x += 0*direction*self.direction
             final_y = y + final_x * math.cos(self.angle)
         else:
             final_x = (length/2) * math.cos(self.time + phase) * math.cos(self.angle)
+            final_x += 0*direction*self.direction 
             final_y = y + final_x * math.sin(self.angle)
         delta_t = math.pi/speed_down if delta_z < 0 else math.pi/speed_up
         delta_z = 0 if delta_z < 0 else delta_z
@@ -64,7 +66,7 @@ class Mizu(object):
         self.leg_3 = MizuLeg(direction=-1, angle=math.pi/4, name=3)
         self.leg_4 = MizuLeg(direction=1, angle=-math.pi/4, name=4)
 
-    def walk(self, joystick, length=200, height=150, y=250, z=-250, cicle=1, direction=1):
+    def walk(self, joystick, length=200, height=150, y=250, z=-300, cicle=1, direction=1):
         self.leg_1.time = 0
         self.leg_2.time = 0
         self.leg_3.time = 0
