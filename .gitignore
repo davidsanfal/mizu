@@ -61,3 +61,4 @@ target/
 .project
 .pydevproject
 .pioenvs
+platformio.sublime*
