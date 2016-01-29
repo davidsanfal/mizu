@@ -8,7 +8,7 @@ quadruped robot
 
 <div align="center"><a href="https://www.youtube.com/watch?v=LNEulyRdnyI" target="_blank"><img src="doc/images/mizu_0.gif" ></a></div>
 
-## Develop
+## development
 
 <p align="center">
 <img height="200" src="https://lh3.googleusercontent.com/vh08haXwlcrVbDvgLRz4FjAvFouLQWmr7RlbHOkAhZ8M-mdl5Lsetyq7CdfiUZp8PyC8PvWK_ciJ9Hdux9jYrWWqcmMWmnlk4U1MfKZ2olKhk6FEpCEtF_WtFEJMWXuyPAh-fxFWaA0mZetUlV1nl6S_eF2r7j1W8xr1NCGjFIKkO4rfUPWPhH-fGGg9_Zfj4G0OMxGAKO1QnFV4EO7RRionw9TrEdWq4WqM-u_ea74loeETiW2Gq2ev0iBKf3nxkhXUOklvc9K66BuJaIGyTmttdsfsGKptsaSvUkqvsPIkPAbC3VUoqczzRoXurvI7NADrULMzMgyWkbQkBA3GXUXQUCRDvnDCHvUbmGTLmd6wPj82z-_Kn9HV0aUcQ32w2vN0buv7OIP2KE9kDnTlzUknqsin8IBKfFkJXpGdWCQe-EXHjq-Tv0qozvAyC0tRhcHakq0bZ7__3fB3LAunSDOsdM7qDpXEzr6OWwL-WkzAHjPzKK4upzax5f7Wo8bAmwDZHCBRJpevvplADbWQDe_8EkMR_1fKXXOq_VaKUpwUyi5SR20_t0mKkFvebLJVz7zy=w640-h360-no">
@@ -50,7 +50,7 @@ We use [Python](https://www.python.org/) to control mizu with a joystick.
 ~/mizu/code/python$ sudo python mizu.py
 ```
 
-# License
+## License
 
 <p align="right">
 <img src="doc/images/by-sa.png" width="200" align = "center">
