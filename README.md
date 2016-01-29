@@ -2,7 +2,7 @@
 quadruped robot
 
 <p align="center">
-<img src="mizu.png" height="600">
+<img src="doc/images/mizu.png" height="600">
 </p>
 
 <p align="center">
@@ -22,6 +22,7 @@ quadruped robot
 | [BQ ZUM](https://github.com/bq/zum) |  Arduino UNO derivative with Blue Tooth support, pin connectors for ease of use, 3Amps supply for periphericals, on/off switch. |
 | [Rhino 1750mAh 2S 7.4v 20C Lipoly Pack](http://www.hobbyking.com/hobbyking/store/__7312__Rhino_1750mAh_2S_7_4v_20C_Lipoly_Pack.html) | Rhino 1750mAh 2S 7.4v 20C Lipoly Pack |
 | [12 x Turnigy TGY-1269HV Titanium](http://www.hobbyking.com/hobbyking/store/__19920__Turnigy_8482_TGY_1269HV_Titanium_HV_BB_DS_MG_Servo_21kg_0_16sec_57g.html?strSearch=1269) | Turnigy 1269HV Digital Titanium Gear Servo 21kg / 0.16sec / 57g. |
+| [Carbon Fiber Square Tube 750x10mm](http://www.hobbyking.com/hobbyking/store/__26194__Carbon_Fiber_Square_Tube_750x10mm_UK_Warehouse_.html) | Carbon Fiber Square Tube 750x10mm. |
 
 ## Software
 
@@ -43,3 +44,9 @@ We use [Python](https://www.python.org/) to control mizu with a joystick.
 ~/mizu cd code/python/
 ~/mizu/code/python$ sudo python mizu.py
 ```
+
+# License
+
+<p align="right">
+<img src="doc/images/by-sa.png" width="200" align = "center">
+</p>
