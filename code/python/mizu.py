@@ -66,7 +66,7 @@ class Mizu(object):
         self.leg_3 = MizuLeg(direction=-1, angle=math.pi/4, name=3)
         self.leg_4 = MizuLeg(direction=1, angle=-math.pi/4, name=4)
 
-    def walk(self, joystick, length=200, height=150, y=250, z=-300, cicle=1, direction=1):
+    def walk(self, joystick, length=200, height=150, y=300, z=-200, cicle=0.5, direction=1):
         self.leg_1.time = 0
         self.leg_2.time = 0
         self.leg_3.time = 0
