@@ -1,107 +1,145 @@
 import PyKDL as kdl
 import numpy as np
 import serial
-from time import sleep
-from math import cos, sin, pi
-
-arduino_conn = serial.Serial('/dev/ttyUSB0', 115200)
-
-leg = kdl.Chain()
-
-leg.addSegment(kdl.Segment(kdl.Joint(kdl.Joint.RotZ),
-                           kdl.Frame(kdl.Vector(0, 37.95, 0))))
-leg.addSegment(kdl.Segment(kdl.Joint(kdl.Joint.RotX),
-                           kdl.Frame(kdl.Vector(0, 342, 0))))
-leg.addSegment(kdl.Segment(kdl.Joint(kdl.Joint.RotX),
-                           kdl.Frame(kdl.Vector(0, 0, -290))))
-ik_solver = kdl.ChainIkSolverPos_LMA(leg)
-
-# 0.0 45.0 315.0
-t = 0
+import math
+import time
+from serial.serialutil import SerialException
+import pygame
 
 
-def circle():
-    t += pi/30
-    x = 150*cos(t)
-    y = 300 + 150*sin(t)
-    target_frame = kdl.Frame(kdl.Vector(x, y, -90))
-    current_angles = kdl.JntArray(leg.getNrOfJoints())
-    result_angles = kdl.JntArray(leg.getNrOfJoints())
-
-    ik_solver.CartToJnt(current_angles, target_frame, result_angles)
-
-    result_angles[0] = np.rad2deg(result_angles[0])
-    result_angles[1] = np.rad2deg(result_angles[1])
-    result_angles[2] = np.rad2deg(result_angles[2])
-    sleep(0.05)
-    msg = "(%i,%i,%i)" % (result_angles[0],
-                          result_angles[1],
-                          result_angles[2])
-    arduino_conn.write(msg)
+SLEEP_TIME = 0.02
 
 
-def step(length=500, height=120, y=300, z=-120, cicle=4, phase=0, direction=1):
-    t = phase
-    sleep_time = 0.02
+class MizuLeg(object):
+    def __init__(self, direction, angle, name):
+        self.name = name
+        segment_0 = kdl.Segment(kdl.Joint(kdl.Joint.RotZ), kdl.Frame(kdl.Vector(0, 37.95, 0)))
+        segment_1 = kdl.Segment(kdl.Joint(kdl.Joint.RotX), kdl.Frame(kdl.Vector(0, 342, 0)))
+        segment_2 = kdl.Segment(kdl.Joint(kdl.Joint.RotX), kdl.Frame(kdl.Vector(0, 0, -290)))
+        self.chain = kdl.Chain()
+        self.chain.addSegment(segment_0)
+        self.chain.addSegment(segment_1)
+        self.chain.addSegment(segment_2)
+        self.ik_solver = kdl.ChainIkSolverPos_LMA(self.chain)
+        self.direction = direction
+        self.angle = angle
+        self.time = 0
 
-    speed_down = int((cicle*0.75)/sleep_time)
-    speed_up = int((cicle*0.25)/sleep_time)
-    while True:
-        delta_z = height*sin(t)
-        x = (length/2) * cos(t) * sin(pi/4)
-        delta_t = pi/speed_down if delta_z < 0 else pi/speed_up
+    def step(self, length=500, height=120, y=300, z=-120, cicle=4, phase=0, direction=1):
+        speed_down = int((cicle*0.75)/SLEEP_TIME)
+        speed_up = int((cicle*0.25)/SLEEP_TIME)
+        delta_z = height*math.sin(self.time + phase)
+        x = ((length)/2) * math.cos(self.time + phase) * math.sin(self.angle)
+        final_y = y + x * math.cos(math.pi/4)
+        final_x = x
+        if self.name == 1 or self.name == 3:
+            final_x = (length/2) * math.cos(self.time + phase) * math.sin(self.angle)
+            final_x += 0*direction*self.direction
+            final_y = y + final_x * math.cos(self.angle)
+        else:
+            final_x = (length/2) * math.cos(self.time + phase) * math.cos(self.angle)
+            final_x += 0*direction*self.direction 
+            final_y = y + final_x * math.sin(self.angle)
+        delta_t = math.pi/speed_down if delta_z < 0 else math.pi/speed_up
         delta_z = 0 if delta_z < 0 else delta_z
-        t += delta_t*direction
-        final_y = y + x * cos(pi/4)
-        target_frame = kdl.Frame(kdl.Vector(x, final_y, delta_z + z))
-        current_angles = kdl.JntArray(leg.getNrOfJoints())
-        result_angles = kdl.JntArray(leg.getNrOfJoints())
+        self.time += delta_t*direction*self.direction
+        target_frame = kdl.Frame(kdl.Vector(final_x, final_y, delta_z + z))
+        current_angles = kdl.JntArray(self.chain.getNrOfJoints())
+        result_angles = kdl.JntArray(self.chain.getNrOfJoints())
 
-        ik_solver.CartToJnt(current_angles, target_frame, result_angles)
-
-        result_angles[0] = np.rad2deg(result_angles[0])
-        result_angles[1] = np.rad2deg(result_angles[1])
-        result_angles[2] = np.rad2deg(result_angles[2])
-        sleep(sleep_time)
-        msg = "(%i,%i,%i)" % (result_angles[0],
-                              result_angles[1],
-                              result_angles[2])
-        arduino_conn.write(msg)
-        print msg
-
-
-def line():
-    for x in range(-250, 250, 10):
-        target_frame = kdl.Frame(kdl.Vector(x, 300, -90))
-        current_angles = kdl.JntArray(leg.getNrOfJoints())
-        result_angles = kdl.JntArray(leg.getNrOfJoints())
-
-        ik_solver.CartToJnt(current_angles, target_frame, result_angles)
+        self.ik_solver.CartToJnt(current_angles, target_frame, result_angles)
 
         result_angles[0] = np.rad2deg(result_angles[0])
         result_angles[1] = np.rad2deg(result_angles[1])
         result_angles[2] = np.rad2deg(result_angles[2])
-        sleep(0.05)
-        msg = "(%i,%i,%i)" % (result_angles[0],
-                              result_angles[1],
-                              result_angles[2])
-        arduino_conn.write(msg)
 
-    for x in range(250, -250, -10):
-        target_frame = kdl.Frame(kdl.Vector(x, 300, -90))
-        current_angles = kdl.JntArray(leg.getNrOfJoints())
-        result_angles = kdl.JntArray(leg.getNrOfJoints())
+        return result_angles, delta_z
 
-        ik_solver.CartToJnt(current_angles, target_frame, result_angles)
 
-        result_angles[0] = np.rad2deg(result_angles[0])
-        result_angles[1] = np.rad2deg(result_angles[1])
-        result_angles[2] = np.rad2deg(result_angles[2])
-        sleep(0.05)
-        msg = "(%i,%i,%i)" % (result_angles[0],
-                              result_angles[1],
-                              result_angles[2])
-        arduino_conn.write(msg)
+class Mizu(object):
 
-while True:
-    step(length=500, height=120, y=300, z=-80, cicle=4, phase=pi/2, direction=1)
+    def __init__(self, port):
+        self.arduino_conn = serial.Serial(port, 19200)
+
+        self.leg_1 = MizuLeg(direction=1, angle=math.pi/4, name=1)
+        self.leg_2 = MizuLeg(direction=-1, angle=-math.pi/4, name=2)
+        self.leg_3 = MizuLeg(direction=-1, angle=math.pi/4, name=3)
+        self.leg_4 = MizuLeg(direction=1, angle=-math.pi/4, name=4)
+
+    def walk(self, joystick, length=200, height=150, y=300, z=-200, cicle=0.5, direction=1):
+        self.leg_1.time = 0
+        self.leg_2.time = 0
+        self.leg_3.time = 0
+        self.leg_4.time = 0
+        symmetrical = True
+        walking = True
+        weight = -0
+        while walking:
+            for _ in pygame.event.get():
+                pass
+            x_axis = float(joystick.get_axis(1))
+            y_axis = float(joystick.get_axis(3))
+            if x_axis:
+                if x_axis > 0:
+                    direction = -1
+                else:
+                    direction = 1
+                final_cicle = cicle + 10 * (1 - math.fabs(x_axis))
+                print final_cicle
+                right_direction = direction
+                left_direction = direction
+                right_length = length
+                left_length = length
+                if y_axis > 0:
+                    left_length = length - y_axis * length
+                elif y_axis < 0:
+                    right_length = length + y_axis * length
+                angles = []
+                gap = (5, 4, 6, 7)
+                if symmetrical:
+                    gap = (7, 0, 5, 4)
+                _angles, _z = self.leg_1.step(right_length, height, y + weight, z,
+                                              final_cicle, (gap[0]*math.pi)/4, right_direction)
+                if _z:
+                    weight = 0
+                angles += _angles
+                _angles, _z = self.leg_2.step(left_length, height, y - weight, z,
+                                              final_cicle, (gap[1]*math.pi)/4, left_direction)
+                if _z:
+                    weight = -0
+                angles += _angles
+                _angles, _z = self.leg_3.step(left_length, height, y - weight, z,
+                                              final_cicle, (gap[2]*math.pi)/4, left_direction)
+                if _z:
+                    weight = -0
+                angles += _angles
+                _angles, _z = self.leg_4.step(right_length, height, y + weight, z,
+                                              final_cicle, (gap[3]*math.pi)/4, right_direction)
+                if _z:
+                    weight = 0
+                angles += _angles
+                msg = [chr(190)]
+                aux = []
+                for angle in angles:
+                    msg.append(chr(int(angle+90)))
+                    aux.append(int(angle+90))
+                msg.append(chr(192))
+                print aux
+                self.arduino_conn.write(bytearray(msg))
+                time.sleep(SLEEP_TIME)
+                walking = True
+
+pygame.init()
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+mizu = None
+for i in range(20):
+    try:
+        mizu = Mizu('/dev/rfcomm%s' % i)
+        print "connected in port: /dev/rfcomm%s" % i
+        break
+    except SerialException:
+        pass
+if mizu:
+    mizu.walk(joystick)
