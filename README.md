@@ -14,3 +14,32 @@ quadruped robot
 <p align="center">
 <img height="200" src="https://lh3.googleusercontent.com/U9xSMB8OREW9e8VfaKFjFcyWRf70XKh_ZSZ6pMie8-gRki8UAmp-wLoDmU3F43P92GJsGwmpPKAMTzhptU08pYqJ6XV8mLNQUYXyWDTh83DXDk8qn4yYN0-FU96Ygl_ddlkmFJTvlUOEFKl8SXX5cRM6SwMvN6IpzmyyDazjtvnfPkuyzDyQIelyXOO5v7ieMfRzU3C7SBP0cEKWkgur93sH6uj4Yn7O5AHeBLq9cQBRSpMXutOkunYpAJ8ew-3hBjEHNIgmMS--mexjePU7zjisEoKZBsYhZ9K7mUx9ZaLbVz7zU8gt3jTtT3C5B9oVhFM6HRPi5c0MVqez9kwwKG_ajEej0UAT5sylFLJMKz70cGfyBlZ_StJr_JdFgCGbknlVgfogI7nidiSdLfgUzk_JFhq9o8mdOZwJx8uiZXmWoSeIp7Sz8cs4JY64HwV0mv8oDbO9cFUJYMPUda79jQpnjS1OFb91-F4lC9D0x-3vyiWlk5pgHvan1RhFn20Bk4J8QZEqrOwLl5VpDJgo8ovq8DoTVz4mYE-TgVFiqfnja_zn-Q7k2GdVZB2vnIjK_Js8=w640-h360-no">
 </p>
+
+## Hardware
+
+| Hardware  | Description |
+| ------------- | ------------- |
+| [BQ ZUM](https://github.com/bq/zum) |  Arduino UNO derivative with Blue Tooth support, pin connectors for ease of use, 3Amps supply for periphericals, on/off switch. |
+| [Rhino 1750mAh 2S 7.4v 20C Lipoly Pack](http://www.hobbyking.com/hobbyking/store/__7312__Rhino_1750mAh_2S_7_4v_20C_Lipoly_Pack.html) | Rhino 1750mAh 2S 7.4v 20C Lipoly Pack |
+| [12 x Turnigy TGY-1269HV Titanium](http://www.hobbyking.com/hobbyking/store/__19920__Turnigy_8482_TGY_1269HV_Titanium_HV_BB_DS_MG_Servo_21kg_0_16sec_57g.html?strSearch=1269) | Turnigy 1269HV Digital Titanium Gear Servo 21kg / 0.16sec / 57g. |
+
+## Software
+
+<p align="center">
+<img src="http://cdn.platformio.org/images/platformio-logo.17fdc3bc.png" width="80">
+<img src="https://www.python.org/static/community_logos/python-powered-w-200x80.png" >
+</p>
+
+We use [platformio](http://platformio.org/) to upload the code to the board.
+
+```bash
+~/mizu cd code/platformio/mizu
+~/mizu/code/platformio/mizu platformio run
+```
+
+We use [Python](https://www.python.org/) to control mizu with a joystick.
+
+```bash
+~/mizu cd code/python/
+~/mizu/code/python$ sudo python mizu.py
+```
