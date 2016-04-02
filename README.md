@@ -52,6 +52,8 @@ We use [Python](https://www.python.org/) to control mizu with a joystick.
 
 ## License
 
-<p align="right">
+Sponsored by BQ untill March 2016
+
+<p align="center">
 <img src="doc/images/by-sa.png" width="200" align = "center">
 </p>
